@@ -6,6 +6,9 @@
 * nodemon
 * morgan - request logger middleware
 
+# Templates
+* pug
+
 # Wetube Route
 /users/:id -> See User
 /users/logout -> Log Out
