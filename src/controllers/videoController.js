@@ -60,10 +60,16 @@ export const deleteVideo = async (req, res) => {
   return res.redirect("/");
 };
 
-export const search = (req, res) => {
+export const search = async (req, res) => {
   const { keyword } = req.query;
+  let videos = [];
   if (keyword) {
-    // search
+    videos = await Video.find({
+      title: {
+        // keyword를 대소문자 구분없이 포함하는 제목 찾음
+        $regex: new RegExp(`${keyword}`, "i"),
+      },
+    });
   }
-  return res.render("search", { pageTitle: "Search" });
+  return res.render("search", { pageTitle: "Search", videos });
 };
