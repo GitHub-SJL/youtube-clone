@@ -1,7 +1,8 @@
 import Video from "../models/Video";
 
 export const home = async (req, res) => {
-  const videos = await Video.find({});
+  //생성 순으로 내림차순
+  const videos = await Video.find({}).sort({ createdAt: "desc" });
   return res.render("home", { pageTitle: "Home", videos });
 };
 export const watch = async (req, res) => {
@@ -53,13 +54,16 @@ export const postUpload = async (req, res) => {
     });
   }
 };
-
-// Model.findOneAndDelete()
-// Model.findOneAndRemove()
-// 몽고 db는 롤백이 안되서 remove를 하면 
-// 다시 되돌릴 수 없기에 remove보다 delete를 사용하라고 권장
 export const deleteVideo = async (req, res) => {
   const { id } = req.params;
   await Video.findByIdAndDelete(id);
   return res.redirect("/");
+};
+
+export const search = (req, res) => {
+  const { keyword } = req.query;
+  if (keyword) {
+    // search
+  }
+  return res.render("search", { pageTitle: "Search" });
 };
