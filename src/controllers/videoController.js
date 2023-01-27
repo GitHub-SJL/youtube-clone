@@ -50,3 +50,22 @@ export const upload = (req, res) => res.send("Upload");
 export const deleteVideo = (req, res) => {
   return res.send("Delete Video");
 };
+
+export const getUpload = (req, res) => {
+  return res.render("upload", { pageTitle: "Upload Video" });
+};
+
+export const postUpload = (req, res) => {
+  // input에 name이 작성되어있지않으면 req.body의 내용을 불러올수가 없다.
+  const { title } = req.body;
+  const newVideo = {
+    title,
+    rating: 0,
+    comments: 0,
+    createdAt: "just now",
+    views: 0,
+    id: videos.length + 1,
+  };
+  videos.push(newVideo);
+  return res.redirect("/");
+};
