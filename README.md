@@ -5,6 +5,7 @@
 * babel
 * nodemon
 * morgan - request logger middleware
+* mongoose
 
 # Templates
 * pug
