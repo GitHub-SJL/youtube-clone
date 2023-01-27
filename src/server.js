@@ -1,4 +1,6 @@
 import "./db";
+// db를 mongoose와 성공적으로 연결시킨 후 model들을 인식
+import "./models/Video";
 import express from "express";
 import morgan from "morgan";
 import globalRouter from "./routers/globalRouter";
