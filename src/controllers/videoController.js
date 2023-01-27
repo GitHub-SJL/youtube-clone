@@ -23,37 +23,19 @@ export const getUpload = (req, res) => {
   return res.render("upload", { pageTitle: "Upload Video" });
 };
 
-//save 방식 
-// export const postUpload = async(req, res) => {
-//   const { title, description, hashtags } = req.body;
-//   const video = new Video({
-//     title: title,
-//     description: description,
-//     createdAt: Date.now(),
-//     hashtags: hashtags.split(",").map((word) => `#${word}`),
-//     meta: {
-//       views: 0,
-//       rating: 0,
-//     },
-//   });
-//   const dbVideo = await video.save();
-
-
-//   return res.redirect("/");
-// };
-
-// create 방식
 export const postUpload = async (req, res) => {
   const { title, description, hashtags } = req.body;
-  await Video.create({
-    title,
-    description,
-    createdAt: "lsdlddldlldld",
-    hashtags: hashtags.split(",").map((word) => `#${word}`),
-    meta: {
-      views: 0,
-      rating: 0,
-    },
-  });
-  return res.redirect("/");
+  try {
+    await Video.create({
+      title,
+      description,
+      hashtags: hashtags.split(",").map((word) => `#${word}`),
+    });
+    return res.redirect("/");
+  } catch (error) {
+    return res.render("upload", {
+      pageTitle: "Upload Video",
+      errorMessage: error._message,
+    });
+  }
 };
