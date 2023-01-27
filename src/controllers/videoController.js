@@ -53,3 +53,13 @@ export const postUpload = async (req, res) => {
     });
   }
 };
+
+// Model.findOneAndDelete()
+// Model.findOneAndRemove()
+// 몽고 db는 롤백이 안되서 remove를 하면 
+// 다시 되돌릴 수 없기에 remove보다 delete를 사용하라고 권장
+export const deleteVideo = async (req, res) => {
+  const { id } = req.params;
+  await Video.findByIdAndDelete(id);
+  return res.redirect("/");
+};
