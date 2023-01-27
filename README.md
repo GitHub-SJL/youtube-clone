@@ -21,4 +21,12 @@
 /videos/:id/delete -> Delete Video
 /videos/upload -> Upload Video
 
-t
+# @3
+* video CRUD, search 구현
+    * schema model validation
+    * find, findById
+    * exist, findById 차이점
+    * 비동기 처리 async await
+    * params, query
+    * schema static functio(middleware)
+    * Reqular Expression
