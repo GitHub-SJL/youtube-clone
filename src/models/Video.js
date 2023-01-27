@@ -11,12 +11,10 @@ const videoSchema = new mongoose.Schema({
     },
 });
 
-// middleware는 무조건 model이 생성되기 전에 만들어야함
-//this는 업로드할 비디오가 됨
-//hashtags는 [] 안에 
-//하나의 string으로 저장되기에 [0]으로 꺼내서 수정
-videoSchema.pre("save", async function () {
-    this.hashtags = this.hashtags[0]
+// 모델 스키마에 static으로 정적인 형태의 함수를 설정할수있다.
+// 그래서 반복되는 코드를 줄일수있다.
+videoSchema.static("formatHashtags", function (hashtags) {
+    return hashtags
         .split(",")
         .map((word) => (word.startsWith("#") ? word : `#${word}`));
 });
