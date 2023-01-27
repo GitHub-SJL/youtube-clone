@@ -1,7 +1,6 @@
 
-const videos = [
+let videos = [
   {
-    title: "Hello",
     title: "First Video",
     rating: 5,
     comments: 2,
@@ -10,30 +9,30 @@ const videos = [
     id: 1,
   },
   {
-    title: "Video #2",
     title: "Second Video",
     rating: 5,
     comments: 2,
     createdAt: "2 minutes ago",
     views: 59,
-    id: 1,
+    id: 2,
   },
   {
-    title: "Whatsup",
     title: "Third Video",
     rating: 5,
     comments: 2,
     createdAt: "2 minutes ago",
     views: 59,
-    id: 1,
+    id: 3,
   },
 ];
 
 export const trending = (req, res) => {
-  res.render("home",{pageTitle:"Home",videos:videos});
+  res.render("home", { pageTitle: "Home", videos: videos });
 };
 export const see = (req, res) => {
-  res.render("watch");
+  const { id } = req.params;
+  const video = videos[id - 1];
+  return res.render("watch", { pageTitle: 'Watching ${video.title}' });
 };
 export const edit = (req, res) => {
   res.render("edit");
