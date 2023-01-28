@@ -7,7 +7,7 @@
 * morgan - request logger middleware
 * mongoose
 * bcrypt
-
+* express-session
 # Templates
 * pug
 

@@ -52,7 +52,6 @@ export const postLogin = async (req, res) => {
             errorMessage: "An account with this username does not exists.",
         });
     }
-    //bcrypt의 compare로 입력받은 비밀번호를 해쉬하고 해쉬화된 비밀번호와 비교
     const ok = await bcrypt.compare(password, user.password);
     if (!ok) {
         return res.status(400).render("login", {
