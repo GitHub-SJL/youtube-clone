@@ -63,8 +63,25 @@ export const postLogin = async (req, res) => {
     req.session.loggedIn = true;
     req.session.user = user; 
     return res.redirect("/");
-
+  //URLSearchParams 유틸리티로 config의 객체 인자들을 url로 만들어줌 
 };
+export const startGithubLogin = (req, res) => {
+    const baseUrl = "https://github.com/login/oauth/authorize";
+    const config = {
+      client_id: "9c26b9af42b98dd2ec4f",
+      allow_signup: false,
+      scope: "read:user user:email",
+    };
+  
+    const params = new URLSearchParams(config).toString();
+    const finalUrl = `${baseUrl}?${params}`;
+    return res.redirect(finalUrl);
+  };
+  
+  export const finishGithubLogin = (req, res) => {
+    return res.redirect("/");
+  };
+
 export const edit = (req, res) => res.send("Edit User");
 export const remove = (req, res) => res.send("Remove User");
 export const login = (req, res) => res.send("Login");
