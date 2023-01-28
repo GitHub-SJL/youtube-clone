@@ -21,16 +21,23 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
     session({
-        secret: "Hello!",
+        // 쿠키에 sign 할때 사용하는 string
+        secret: process.env.COOKIE_SECRET,
 
-        // 모든 방문자에게 쿠키를 주지않게 하기위해 false 설정
+        //Domain: 쿠키를 만든 backend가 누구인지
+        //Expires : 만료날짜, Session은 디폴트고 사용자가 닫으면 만료
+        //Max-age : 세션이 언제 만료되는지
+        //
+
+        cookie:{
+            maxAge:20000,
+        },
         resave: false,
 
-        // 세션이 새로 만들어지고 수정된 적이 없을때 uninitialized
-        // 즉, 아래 코드는 로그인 시 세션이 수정되니까 로그인한 세션은 저장
+  
         saveUninitialized: false,
 
-        store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/wetube" }),
+        store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
     })
 );
 
