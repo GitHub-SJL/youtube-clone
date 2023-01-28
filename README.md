@@ -31,3 +31,12 @@
     * params, query
     * schema static functio(middleware)
     * Reqular Expression
+
+# @4
+* 회원가입, 로그인
+    * Hashing
+        * bycrypt
+    * Session & Cookie (stateless 해결)
+        * session은 object니까 원하는 아무거나 추가 가능
+        * sessionStore
+        * localsMiddleware
