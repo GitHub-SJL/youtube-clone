@@ -1,4 +1,3 @@
-
 import express from "express";
 import morgan from "morgan";
 import session from "express-session";
@@ -29,12 +28,12 @@ app.use(
         //Max-age : 세션이 언제 만료되는지
         //
 
-        cookie:{
-            maxAge:20000,
+        cookie: {
+            maxAge: 20000,
         },
         resave: false,
 
-  
+
         saveUninitialized: false,
 
         store: MongoStore.create({ mongoUrl: process.env.DB_URL }),

@@ -9,6 +9,7 @@
 * bcrypt
 * express-session
 * connect-mongo
+* dotenv
 # Templates
 * pug
 
