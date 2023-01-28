@@ -42,3 +42,8 @@
         * session은 object니까 원하는 아무거나 추가 가능
         * sessionStore
         * localsMiddleware
+* 깃헙 로그인
+    * 1단계
+        * 사용자를 깃헙으로 보낸다.
+        * 여러가지 설정가능(scope 설정을 통해 받고싶은 정보도 추가)
+    
