@@ -10,6 +10,7 @@
 * express-session
 * connect-mongo
 * dotenv
+* fetch
 # Templates
 * pug
 
