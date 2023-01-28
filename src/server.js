@@ -2,6 +2,7 @@
 import express from "express";
 import morgan from "morgan";
 import session from "express-session";
+import MongoStore from "connect-mongo";
 import rootRouter from "./routers/rootRouter";
 import videoRouter from "./routers/videoRouter";
 import userRouter from "./routers/userRouter";
@@ -23,6 +24,13 @@ app.use(
         secret: "Hello!",
         resave: true,
         saveUninitialized: true,
+        // sessionStore을 사용해야하는 이유
+        // 쿠키에는 session 데이터가 저장되지 않고 session ID만 저장됨
+        // session 데이터는 서버쪽에 저장이됨 그렇게되면 서버를 재시작 시 세션 데이터가 사라짐
+
+        // 세션들을 몽고 database에 저장
+        // 그래서 세션들이 서버가 재시작 되도 유지
+        store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/wetube" }),
     })
 );
 

@@ -8,6 +8,7 @@
 * mongoose
 * bcrypt
 * express-session
+* connect-mongo
 # Templates
 * pug
 
