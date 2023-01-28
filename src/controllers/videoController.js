@@ -1,7 +1,5 @@
 import Video from "../models/Video";
-
 export const home = async (req, res) => {
-  //생성 순으로 내림차순
   const videos = await Video.find({}).sort({ createdAt: "desc" });
   return res.render("home", { pageTitle: "Home", videos });
 };
@@ -17,7 +15,11 @@ export const getEdit = async (req, res) => {
   const { id } = req.params;
   const video = await Video.findById(id);
   if (!video) {
-    return res.render("404", { pageTitle: "Video not found." });
+    // 404는 서버에 존재하지 않는 페이지에 대한 요청이 있을 경우 
+    // 400은 서버가 요청의 구문을 인식하지 못할 때 발생 클라이언트 측에서 문제 
+    // status code를 전달해야 
+    // 브라우저의 History에 남길지 말지를 에 대해 적절한 행동을 취함 
+    return res.status(404).render("404", { pageTitle: "Video not found." });
   }
   return res.render("edit", { pageTitle: `Edit: ${video.title}`, video });
 };
@@ -26,7 +28,7 @@ export const postEdit = async (req, res) => {
   const { title, description, hashtags } = req.body;
   const video = await Video.exists({ _id: id });
   if (!video) {
-    return res.render("404", { pageTitle: "Video not found." });
+    return res.status(404).render("404", { pageTitle: "Video not found." });
   }
   await Video.findByIdAndUpdate(id, {
     title,
@@ -48,7 +50,7 @@ export const postUpload = async (req, res) => {
     });
     return res.redirect("/");
   } catch (error) {
-    return res.render("upload", {
+    return res.status(400).render("upload", {
       pageTitle: "Upload Video",
       errorMessage: error._message,
     });
@@ -59,15 +61,13 @@ export const deleteVideo = async (req, res) => {
   await Video.findByIdAndDelete(id);
   return res.redirect("/");
 };
-
 export const search = async (req, res) => {
   const { keyword } = req.query;
   let videos = [];
   if (keyword) {
     videos = await Video.find({
       title: {
-        // keyword를 대소문자 구분없이 포함하는 제목 찾음
-        $regex: new RegExp(`${keyword}`, "i"),
+        $regex: new RegExp(`${keyword}$`, "i"),
       },
     });
   }
