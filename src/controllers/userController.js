@@ -57,9 +57,13 @@ export const postLogin = async (req, res) => {
         return res.status(400).render("login", {
             pageTitle,
             errorMessage: "Wrong password",
-        });  
+        });
     }
+    // 로그인 시 세션에 유저 정보들을 추가(loggedIn, user)
+    req.session.loggedIn = true;
+    req.session.user = user; 
     return res.redirect("/");
+
 };
 export const edit = (req, res) => res.send("Edit User");
 export const remove = (req, res) => res.send("Remove User");
