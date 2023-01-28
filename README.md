@@ -6,6 +6,7 @@
 * nodemon
 * morgan - request logger middleware
 * mongoose
+* bcrypt
 
 # Templates
 * pug
