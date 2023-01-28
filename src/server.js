@@ -22,14 +22,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
     session({
         secret: "Hello!",
-        resave: true,
-        saveUninitialized: true,
-        // sessionStore을 사용해야하는 이유
-        // 쿠키에는 session 데이터가 저장되지 않고 session ID만 저장됨
-        // session 데이터는 서버쪽에 저장이됨 그렇게되면 서버를 재시작 시 세션 데이터가 사라짐
 
-        // 세션들을 몽고 database에 저장
-        // 그래서 세션들이 서버가 재시작 되도 유지
+        // 모든 방문자에게 쿠키를 주지않게 하기위해 false 설정
+        resave: false,
+
+        // 세션이 새로 만들어지고 수정된 적이 없을때 uninitialized
+        // 즉, 아래 코드는 로그인 시 세션이 수정되니까 로그인한 세션은 저장
+        saveUninitialized: false,
+
         store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/wetube" }),
     })
 );
