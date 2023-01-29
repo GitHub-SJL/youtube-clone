@@ -146,21 +146,31 @@ export const getEdit = (req, res) => {
     return res.render("edit-profile", { pageTitle: "Edit Profile" });
 };
 export const postEdit = async (req, res) => {
-    // const { user:{_id} } = req.session;
     const {
       session: {
         user: { _id },
       },
       body: { name, email, username, location },
     } = req;
-    await User.findByIdAndUpdate(_id, {
-      name,
-      email,
-      username,
-      location,
-    });
-    return res.render("edit-profile");
-  };
+    // 문제점: 세션이 로그인했을때 바뀌기때문에 edit하고 바로 적용이 안됨
+
+    // findByIdAndUpdate를 이용 
+    const updatedUser = await User.findByIdAndUpdate(
+        _id,
+        {
+          name,
+          email,
+          username,
+          location,
+        },
+        // findByIdAndUpdate는 기본적으로 update 되기 전의 데이터를 return 해주기에
+        // new:true를 통해 업데이트된 데이터를 return 해줌
+        // 즉 가장 최근 업데이트 된 object를 원할시 new:true
+        { new: true }
+      );
+      req.session.user = updatedUser;
+      return res.redirect("/users/edit");
+    };
 
 export const remove = (req, res) => res.send("Remove User");
 export const login = (req, res) => res.send("Login");
