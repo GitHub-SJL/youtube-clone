@@ -1,4 +1,5 @@
 import User from "../models/User";
+import Video from "../models/Video";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
 
@@ -117,9 +118,9 @@ export const finishGithubLogin = async (req, res) => {
     if (!user) {
       user = await User.create({
         avatarUrl: userData.avatar_url,
-        name: userData.name ? userData.name : "익명",
+        name: userData.name,
         username: userData.login,
-        email: emailObj.email ? emailObj.email : "없음",
+        email: emailObj.email,
         password: "",
         socialOnly: true,
         location: userData.location,
@@ -194,14 +195,17 @@ export const postChangePassword = async (req, res) => {
   await user.save();
   return res.redirect("/users/logout");
 };
+
 export const see = async (req, res) => {
   const { id } = req.params;
   const user = await User.findById(id);
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found." });
   }
+  const videos = await Video.find({ owner: user._id });
   return res.render("users/profile", {
     pageTitle: user.name,
-    user, 
+    user,
+    videos,
   });
 };
