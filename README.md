@@ -11,6 +11,7 @@
 * connect-mongo
 * dotenv
 * fetch
+* multer
 # Templates
 * pug
 
