@@ -10,6 +10,8 @@ const videoSchema = new mongoose.Schema({
         views: { type: Number, default: 0, required: true },
         rating: { type: Number, default: 0, required: true },
     },
+    // objectID가 'model User'온다고 알려줌
+    owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
 });
 
 // 모델 스키마에 static으로 정적인 형태의 함수를 설정할수있다.
