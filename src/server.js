@@ -20,22 +20,12 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
     session({
-        // 쿠키에 sign 할때 사용하는 string
         secret: process.env.COOKIE_SECRET,
-
-        //Domain: 쿠키를 만든 backend가 누구인지
-        //Expires : 만료날짜, Session은 디폴트고 사용자가 닫으면 만료
-        //Max-age : 세션이 언제 만료되는지
-        //
-
         cookie: {
             maxAge: 20000,
         },
         resave: false,
-
-
         saveUninitialized: false,
-
         store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
     })
 );
@@ -43,8 +33,10 @@ app.use(
 // locals 관리를 다른파일로 분리
 app.use(localsMiddleware);
 
-
-
+//우리 서버가 /uploads/~~ 라는 url을 이해하도록 설정하지않아서
+//이미지가 안보였던거임
+//그래서 express에게 uploads주소에 가면 uploads폴더의 내용을 보여주도록 설정
+app.use("/uploads", express.static("uploads"));
 app.use("/", rootRouter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);
